@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 
 const products = (props) => {
   return (
@@ -20,10 +21,11 @@ const products = (props) => {
             <div className="xl:w-1/4 md:w-1/2 p-4">
             <div className="bg-gray-100 p-6 rounded-lg">
               <img className="h-40 rounded w-full object-cover object-center mb-6" src="https://dummyimage.com/720x400" alt="content"/>
-              <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">{item.attributes.category}</h3>
+              <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">{item.attributes.category.toUpperCase()}</h3>
               <h2 className="text-lg text-gray-900 font-medium title-font mb-4">{item.attributes.title}</h2>
+              <p className="leading-relaxed ">Rs. {item.attributes.price}</p>
               <p className="leading-relaxed text-base">{item.attributes.description}</p>
-              <p className="leading-relaxed ">{item.attributes.price}+ Rs.</p>
+              <Link href={`/product/${item.attributes.slug}`}><button class="text-white bg-indigo-500 border-0 my-2 md:py-2 py-1 px-2 md:px-4 focus:outline-none hover:bg-indigo-600 rounded text-sm">Buy Now</button></Link>
             </div>
           </div>
          
