@@ -10,7 +10,7 @@ const Slug = ({product,addToCart}) => {
      <section className="text-gray-600 body-font overflow-hidden">
   <div className="container px-5 py-24 mx-auto">
     <div className="lg:w-4/5 mx-auto flex flex-wrap">
-      <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="https://dummyimage.com/400x400"/>
+      <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src={product.attributes.image.data.attributes.name}/>
       <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
         <h2 className="text-sm title-font text-gray-500 tracking-widest">MyShop</h2>
         <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{product.attributes.title}</h1>
@@ -80,7 +80,7 @@ const Slug = ({product,addToCart}) => {
           <span className="title-font font-medium text-2xl text-gray-900">₹ {product.attributes.price}</span>
 
           <div className='flex mx-2'>
-          <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 mx-2 px-4 focus:outline-none hover:bg-indigo-600 rounded" onClick={()=>{addToCart(slug,1,product.attributes.price)}}>Add to Cart</button>
+          <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 mx-2 px-4 focus:outline-none hover:bg-indigo-600 rounded" onClick={()=>{addToCart(slug,product.attributes.title,product.attributes.price)}}>Add to Cart</button>
           <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 mx-2 px-4 focus:outline-none hover:bg-indigo-600 rounded" onClick={()=>{router.push('/checkout')}}>Checkout</button>
           </div>
           <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
@@ -101,7 +101,7 @@ export async function getServerSideProps(context) {
     let head = {
       Authorization:"Bearer 38e624ec184ce57709b87d83a36ba46ef52badfc356f3a475fcaf9758ab4f047e43bc900e7eaacd4552f9bb29514728d7c06758428db6b87696d9328338c5d8706a6675c946ca470a66943bc46cbc9741305e59296aa77db07a4a0335ddc1ecac4ea1658423fca65b9d1591f25fc8342cd6ae7cdba2beb0066c3a0c3f5bf4c0c"
     }
-    let response = await fetch("http://localhost:1337/api/products?filters[slug]="+context.query.slug,{headers:head})
+    let response = await fetch("http://localhost:1337/api/products?filters[slug]="+context.query.slug+"&populate=*",{headers:head})
   let product = await response.json()
     return {
       props: {product: product.data[0]}, 
