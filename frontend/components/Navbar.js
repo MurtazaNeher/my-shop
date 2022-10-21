@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-const Navbar = () => {
+const Navbar = ({cart}) => {
   return (
     <div>
       <header className="text-gray-600 body-font">
@@ -17,6 +17,7 @@ const Navbar = () => {
       <Link href="/about"><a className="mr-5 hover:text-gray-900">About</a></Link>
       <Link href="/products"><a className="mr-5 hover:text-gray-900">Products</a></Link>
       <Link href="/contact"><a className="mr-5 hover:text-gray-900">Contact us</a></Link>
+      <Link href="/checkout"><a className="mr-5 hover:text-gray-900">Cart({cart.length})</a></Link>
     </nav>
     <button className="text-white bg-indigo-500 border-0 my-2 md:py-2 py-1 px-2 md:px-4 focus:outline-none hover:bg-indigo-600 rounded text-sm">Login</button>
 
