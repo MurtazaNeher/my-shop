@@ -29,17 +29,19 @@
       "required": false
     },
     "image": {
-      "allowedTypes": [
-        "images"
-      ],
       "type": "media",
       "multiple": false,
-      "private": true
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
     },
     "category": {
       "type": "enumeration",
       "enum": [
         "tshirt",
+        "lower",
+        "accessories",
         "mug",
         "hoodie",
         "stickers"
