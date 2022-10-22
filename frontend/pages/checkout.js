@@ -1,6 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const Ckeckout = ({ cart }) => {
+  const router = useRouter();
+  const [subTotal, setSubTotal] = useState(0);
+  const [form,setForm]=useState({name:"",email:"",phone:"",address:""})
+  useEffect(() => {
+    console.log("reloaded");
+
+    let total = 0;
+    for (let i = 0; i < cart.length; i++) {
+      total += cart[i][2];
+    }
+    setSubTotal(total);
+  });
+
+  const handleFormChange = (e)=>{
+    setForm({...form,[e.target.name]:e.target.value})
+  }
   return (
     <div>
       <section className="text-gray-600 body-font">
@@ -14,48 +31,60 @@ const Ckeckout = ({ cart }) => {
             </p>
           </div>
           <div className="flex flex-wrap lg:w-4/5 sm:mx-auto sm:mb-2 -mx-2">
-
-          {cart.map((item) => {
-          return (
-            <div className="p-2 w-full" key={item[0]}>
-            <div className="bg-gray-100 rounded flex p-4 h-full items-center">
-              <svg
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="3"
-                className="text-indigo-500 w-6 h-6 flex-shrink-0 mr-4"
-                viewBox="0 0 24 24"
-              >
-                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
-                <path d="M22 4L12 14.01l-3-3"></path>
-              </svg>
-
-              <div className="flex justify-between w-full">
-              <span className="title-font font-medium">
-                {item[1]}
-              </span>
-              <span className="title-font font-medium text-right">
-                {"₹"+item[2]+"/-"}
-              </span>
+            {subTotal === 0 ? (
+              <div className="mx-auto">
+                <p className="leading-relaxed  mx-auto text-4xl">
+                  Cart is empty :(
+                </p>
+                <button
+                  className="flex mx-auto mt-5 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                  onClick={() => {
+                    router.push("/products");
+                  }}
+                >
+                  See products
+                </button>
               </div>
-              
-            </div>
-          </div>
-          );
-        })}
-           
-          
+            ) : (
+              cart.map((item) => {
+                return (
+                  <div className="p-2 w-full" key={item[0]}>
+                    <div className="bg-gray-100 rounded flex p-4 h-full items-center">
+                      <svg
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="3"
+                        className="text-indigo-500 w-6 h-6 flex-shrink-0 mr-4"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                        <path d="M22 4L12 14.01l-3-3"></path>
+                      </svg>
+
+                      <div className="flex justify-between w-full">
+                        <span className="title-font font-medium">
+                          {item[1]}
+                        </span>
+                        <span className="title-font font-medium text-right">
+                          {"₹" + item[2] + "/-"}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="leading-relaxed  mx-auto text-4xl text-right mt-5">
+                      Subtotal : {subTotal}
+                    </p>
+                  </div>
+                );
+              })
+            )}
           </div>
         </div>
-      </section>
-      
-      <section className="text-gray-600 body-font relative">
         <div className="container px-5 py-24 mx-auto">
           <div className="lg:w-1/2 md:w-2/3 mx-auto">
             <div className="flex flex-wrap -m-2">
-              <div className="p-2 w-1/2">
+              <div className="p-2 w-full">
                 <div className="relative">
                   <label
                     htmlFor="name"
@@ -68,10 +97,11 @@ const Ckeckout = ({ cart }) => {
                     id="name"
                     name="name"
                     className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    onChange={handleFormChange} value={form.name}
                   />
                 </div>
               </div>
-              <div className="p-2 w-1/2">
+              <div className="p-2 w-full">
                 <div className="relative">
                   <label
                     htmlFor="email"
@@ -84,21 +114,43 @@ const Ckeckout = ({ cart }) => {
                     id="email"
                     name="email"
                     className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    onChange={handleFormChange} value={form.email}
+
                   />
                 </div>
               </div>
               <div className="p-2 w-full">
                 <div className="relative">
                   <label
-                    htmlFor="message"
+                    htmlFor="phone"
                     className="leading-7 text-sm text-gray-600"
                   >
-                    Message
+                    Phone
+                  </label>
+                  <input
+                    type="phone"
+                    id="phone"
+                    name="phone"
+                    className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    onChange={handleFormChange} value={form.phone}
+
+                  />
+                </div>
+              </div>
+              <div className="p-2 w-full">
+                <div className="relative">
+                  <label
+                    htmlFor="address"
+                    className="leading-7 text-sm text-gray-600"
+                  >
+                    Address
                   </label>
                   <textarea
-                    id="message"
-                    name="message"
+                    id="address"
+                    name="address"
                     className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                    onChange={handleFormChange} value={form.address}
+
                   ></textarea>
                 </div>
               </div>
