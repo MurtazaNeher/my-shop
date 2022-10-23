@@ -16,13 +16,20 @@ function MyApp({ Component, pageProps }) {
   
     // if(search(newCart[0][0],cart[0][0])){
     if(cart.find(x => x[0] == newCart[0][0])){
+      setReloadKey(Math.random());
       
     }else{
       setCart(newCart);
       setReloadKey(Math.random());
     }
   };
-  const removeFromCart = (item, qty) => {};
+  const removeFromCart = (item) => {
+    console.log(item)
+    let newCart = cart;
+    newCart.pop(item)
+    setReloadKey(Math.random());
+
+  };
   const clearCart = (item) => {};
   return (
     <>

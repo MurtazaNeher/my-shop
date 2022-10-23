@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-const Ckeckout = ({ cart }) => {
+const Ckeckout = ({ cart,removeFromCart }) => {
   const router = useRouter();
   const [subTotal, setSubTotal] = useState(0);
-  const [form,setForm]=useState({name:"",email:"",phone:"",address:""})
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+  });
   useEffect(() => {
     console.log("reloaded");
 
@@ -15,9 +20,9 @@ const Ckeckout = ({ cart }) => {
     setSubTotal(total);
   });
 
-  const handleFormChange = (e)=>{
-    setForm({...form,[e.target.name]:e.target.value})
-  }
+  const handleFormChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
   return (
     <div>
       <section className="text-gray-600 body-font">
@@ -48,8 +53,8 @@ const Ckeckout = ({ cart }) => {
             ) : (
               cart.map((item) => {
                 return (
-                  <div className="p-2 w-full" key={item[0]}>
-                    <div className="bg-gray-100 rounded flex p-4 h-full items-center">
+                  <div className="p-2 w-full" key={item.id}>
+                    <div className="bg-gray-100 rounded flex p-4 h-full items-center relative">
                       <svg
                         fill="none"
                         stroke="currentColor"
@@ -70,6 +75,7 @@ const Ckeckout = ({ cart }) => {
                         <span className="title-font font-medium text-right">
                           {"₹" + item[2] + "/-"}
                         </span>
+                        <img className="w-4 top-0 right-0 absolute cursor-pointer" src="/delete-icon.svg" style={{transform:"translate(-10px,10px)"}} onClick={()=>{removeFromCart(item)}}></img>
                       </div>
                     </div>
                     <p className="leading-relaxed  mx-auto text-4xl text-right mt-5">
@@ -97,7 +103,8 @@ const Ckeckout = ({ cart }) => {
                     id="name"
                     name="name"
                     className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                    onChange={handleFormChange} value={form.name}
+                    onChange={handleFormChange}
+                    value={form.name}
                   />
                 </div>
               </div>
@@ -114,8 +121,8 @@ const Ckeckout = ({ cart }) => {
                     id="email"
                     name="email"
                     className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                    onChange={handleFormChange} value={form.email}
-
+                    onChange={handleFormChange}
+                    value={form.email}
                   />
                 </div>
               </div>
@@ -132,8 +139,8 @@ const Ckeckout = ({ cart }) => {
                     id="phone"
                     name="phone"
                     className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                    onChange={handleFormChange} value={form.phone}
-
+                    onChange={handleFormChange}
+                    value={form.phone}
                   />
                 </div>
               </div>
@@ -149,8 +156,8 @@ const Ckeckout = ({ cart }) => {
                     id="address"
                     name="address"
                     className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                    onChange={handleFormChange} value={form.address}
-
+                    onChange={handleFormChange}
+                    value={form.address}
                   ></textarea>
                 </div>
               </div>

@@ -19,7 +19,7 @@ const Navbar = ({cart}) => {
       <Link href="/contact"><a className="mr-5 hover:text-gray-900">Contact us</a></Link>
       <Link href="/checkout"><a className="mr-5 hover:text-gray-900">Cart({cart.length})</a></Link>
     </nav>
-    <button className="text-white bg-indigo-500 border-0 my-2 md:py-2 py-1 px-2 md:px-4 focus:outline-none hover:bg-indigo-600 rounded text-sm">Login</button>
+    <a href="/signup" className="text-white bg-indigo-500 border-0 my-2 md:py-2 py-1 px-2 md:px-4 focus:outline-none hover:bg-indigo-600 rounded text-sm">Login</a>
 
   </div>
 </header>
